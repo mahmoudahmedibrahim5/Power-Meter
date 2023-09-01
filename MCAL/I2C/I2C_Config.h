@@ -8,8 +8,8 @@
 #ifndef I2C_I2C_CONFIG_H_
 #define I2C_I2C_CONFIG_H_
 
-#define I2C1_SCL_PIN	6	// Could be 6 or 8 (configure it as you like)
-#define I2C1_SDA_PIN	7	// Could be 7 or 9 (configure it as you like)
+#define I2C1_SCL_PIN	8	// Could be 6 or 8 (configure it as you like)
+#define I2C1_SDA_PIN	9	// Could be 7 or 9 (configure it as you like)
 
 // Write the frequency in MHz
 #define I2C_FREQ	16
@@ -17,11 +17,11 @@
 #define I2C_T_SCL	10 // TL and TH recommended to be 5
 
 typedef struct{
-	uint8_t speedMode;
-	uint8_t addressSize;
-	uint8_t speed;
-	uint16_t address;
-	uint8_t ACK;
+	u8 speedMode;
+	u8 addressSize;
+	u8 speed;
+	u16 address;
+	u8 ACK;
 }I2C_Config_t;
 
 /* Speed Modes */
@@ -38,13 +38,13 @@ typedef struct{
 
 
 typedef struct{
-	uint8_t* data;
-	uint8_t len;
-	uint8_t slaveAddress;
-	uint8_t repeatedStart;
-	uint8_t TxOrRx;
-	uint8_t index;
-	uint8_t runningState;
+	u8* data;
+	u8 len;
+	u8 slaveAddress;
+	u8 repeatedStart;
+	u8 TxOrRx;
+	u8 index;
+	u8 runningState;
 }I2C_HandleIT_t;
 
 /* TX or RX */

@@ -8,19 +8,19 @@
 #ifndef RCC_RCC_INTERFACE_H_
 #define RCC_RCC_INTERFACE_H_
 
-#include "../../Std Libraries/stm32f401xx.h"
+#include "../../Std Libraries/STD_TYPES.h"
 #include "RCC_Registers.h"
 #include "RCC_Private.h"
 #include "RCC_Config.h"
 
-void RCC_init();
+void RCC_voidInit();
 
-void RCC_peripheralEn(EN_peripheral_t per);
-void RCC_peripheralDis(EN_peripheral_t per);
+void RCC_voidPeripheralEnable(EN_peripheral_t per);
+void RCC_voidPeripheralDisable(EN_peripheral_t per);
 
-void RCC_peripheralLowPowerEn(EN_peripheral_t per);
-void RCC_peripheralLowPowerDis(EN_peripheral_t per);
+void RCC_voidPeripheralLowPowerEnable(EN_peripheral_t per);
+void RCC_voidPeripheralLowPowerDisable(EN_peripheral_t per);
 
-void RCC_peripheralReset(EN_peripheral_t per);
+void RCC_voidPeripheralReset(EN_peripheral_t per);
 
 #endif /* RCC_RCC_INTERFACE_H_ */

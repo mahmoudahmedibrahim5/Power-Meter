@@ -7,15 +7,11 @@
 
 #include "I2C_Interface.h"
 
-void I2C_init(st_I2C_RegDef_t* I2Cn, I2C_Config_t* config){
-	if(I2Cn == I2C1)
-		RCC_peripheralEn(I2C1_EN);
-	else if(I2Cn == I2C2)
-		RCC_peripheralEn(I2C2_EN);
-	else if(I2Cn == I2C3)
-		RCC_peripheralEn(I2C3_EN);
+static void I2C_voidConfigurePins(st_I2C_RegDef_t* I2Cn);
 
-	I2C_configurePins(I2Cn);
+void I2C_voidInit(st_I2C_RegDef_t* I2Cn, I2C_Config_t* config){
+
+	I2C_voidConfigurePins(I2Cn);
 
 	/* Clock Configuration */
 	I2Cn->CR2 |= (I2C_FREQ & 0x3F);
@@ -55,8 +51,8 @@ void I2C_init(st_I2C_RegDef_t* I2Cn, I2C_Config_t* config){
 		I2Cn->CR1 &= ~(1<<10);
 }
 
-void I2C_masterSendData(st_I2C_RegDef_t* I2Cn, uint8_t address, uint8_t* data, uint32_t len, uint8_t repeatedStart){
-	uint8_t slaveAddress;
+void I2C_voidMasterSendData(st_I2C_RegDef_t* I2Cn, u8 address, u8* data, u32 len, u8 repeatedStart){
+	u8 slaveAddress;
 
 	// Send Start bit
 	I2Cn->CR1 |= (1<<I2C_START);
@@ -69,11 +65,11 @@ void I2C_masterSendData(st_I2C_RegDef_t* I2Cn, uint8_t address, uint8_t* data, u
 
 	// Wait for address to be sent
 	while(!(I2Cn->SR1 & (1<<I2C_FLAG_ADDR)));
-	uint8_t readSR2 = I2Cn->SR2; // Clear ADDR flag
+	u8 readSR2 = I2Cn->SR2; // Clear ADDR flag
 	(void)readSR2;
 
 	// Send the data
-	for(uint32_t i=0; i<len; i++){
+	for(u32 i=0; i<len; i++){
 		while(!(I2Cn->SR1 & (1<<I2C_FLAG_TXE)));
 		I2Cn->DR = data[i];
 	}
@@ -84,9 +80,9 @@ void I2C_masterSendData(st_I2C_RegDef_t* I2Cn, uint8_t address, uint8_t* data, u
 		I2Cn->CR1 |= (1<<I2C_STOP);
 }
 
-void I2C_masterReceiveData(st_I2C_RegDef_t* I2Cn,  uint8_t address, uint8_t* data, uint32_t len, uint8_t repeatedStart){
-	uint32_t i=0;
-	uint8_t slaveAddress;
+void I2C_voidMasterReceiveData(st_I2C_RegDef_t* I2Cn,  u8 address, u8* data, u32 len, u8 repeatedStart){
+	u32 i=0;
+	u8 slaveAddress;
 
 	// Send Start bit
 	I2Cn->CR1 |= (1<<I2C_START);
@@ -102,7 +98,7 @@ void I2C_masterReceiveData(st_I2C_RegDef_t* I2Cn,  uint8_t address, uint8_t* dat
 	if(len==1) // Disable the ACK
 		I2Cn->CR1 &= ~(1<<10);
 
-	uint8_t readSR2 = I2Cn->SR2; // Clear ADDR flag
+	u8 readSR2 = I2Cn->SR2; // Clear ADDR flag
 	(void)readSR2;
 
 	// Receive the data
@@ -119,47 +115,46 @@ void I2C_masterReceiveData(st_I2C_RegDef_t* I2Cn,  uint8_t address, uint8_t* dat
 	I2Cn->CR1 |= (1<<10);
 }
 
-void I2C_slaveSendData(st_I2C_RegDef_t* I2Cn, uint8_t data){
+void I2C_voidSlaveSendData(st_I2C_RegDef_t* I2Cn, u8 data){
 	I2Cn->DR = data;
 }
 
-void I2C_slaveReceiveData(st_I2C_RegDef_t* I2Cn, uint8_t* data){
+void I2C_voidSlaveReceiveData(st_I2C_RegDef_t* I2Cn, u8* data){
 	*data = I2Cn->DR;
 }
 
-void I2C_configurePins(st_I2C_RegDef_t* I2Cn){
+static void I2C_voidConfigurePins(st_I2C_RegDef_t* I2Cn){
 	GPIO_Config_t I2C_config;
-	I2C_config.mode = ALT_FN;
-	I2C_config.outType = OPEN_DRAIN;
-	I2C_config.pupdState = NO_PUPD;
-	I2C_config.speed = HIGH_SPEED;
+	I2C_config.mode = GPIO_ALT_FN;
+	I2C_config.outType = GPIO_OPEN_DRAIN;
+	I2C_config.pupdState = GPIO_NO_PUPD;
+	I2C_config.speed = GPIO_HIGH_SPEED;
 
 	if(I2Cn == I2C1){
-		I2C_config.AltFuncMode = AF4;
-		GPIO_initPin(PORTB, I2C1_SCL_PIN, &I2C_config); // SCL
-		GPIO_initPin(PORTB, I2C1_SDA_PIN, &I2C_config); // SDA
+		I2C_config.AltFuncMode = GPIO_AF4;
+		GPIO_voidInitPin(PORTB, I2C1_SCL_PIN, &I2C_config); // SCL
+		GPIO_voidInitPin(PORTB, I2C1_SDA_PIN, &I2C_config); // SDA
 	}
 	else if(I2Cn == I2C2){
-		I2C_config.AltFuncMode = AF4;
-		GPIO_initPin(PORTB, 10, &I2C_config); // SCL
-		I2C_config.AltFuncMode = AF9;
-		GPIO_initPin(PORTB, 3, &I2C_config); // SDA
+		I2C_config.AltFuncMode = GPIO_AF4;
+		GPIO_voidInitPin(PORTB, 10, &I2C_config); // SCL
+		I2C_config.AltFuncMode = GPIO_AF9;
+		GPIO_voidInitPin(PORTB, 3, &I2C_config); // SDA
 	}
 	else if(I2Cn == I2C3){
-		I2C_config.AltFuncMode = AF4;
-		GPIO_initPin(PORTA, 8, &I2C_config); // SCL
-		I2C_config.AltFuncMode = AF9;
-		GPIO_initPin(PORTB, 4, &I2C_config); // SDA
+		I2C_config.AltFuncMode = GPIO_AF4;
+		GPIO_voidInitPin(PORTA, 8, &I2C_config); // SCL
+		I2C_config.AltFuncMode = GPIO_AF9;
+		GPIO_voidInitPin(PORTB, 4, &I2C_config); // SDA
 	}
 }
 
-void I2C_reset(st_I2C_RegDef_t* I2Cn)
+void I2C_voidReset(st_I2C_RegDef_t* I2Cn)
 {
 	I2Cn->CR1 |= (1<<15);
 }
 
-
-void I2C_masterSendDataIT(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
+void I2C_voidMasterSendDataIT(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 	// Initialize handle variables
 	handle->TxOrRx = I2C_TX_MODE;
 	handle->index = 0;
@@ -169,7 +164,7 @@ void I2C_masterSendDataIT(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 	I2Cn->CR1 |= (1<<I2C_START);
 }
 
-void I2C_masterReceiveDataIT(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
+void I2C_voidMasterReceiveDataIT(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 	// Initialize handle variables
 	handle->TxOrRx = I2C_RX_MODE;
 	handle->index = 0;
@@ -179,13 +174,13 @@ void I2C_masterReceiveDataIT(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 	I2Cn->CR1 |= (1<<I2C_START);
 }
 
-void I2C_eventInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
-	uint32_t SR1 = I2Cn->SR1;
+void I2C_voidEventInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
+	u32 SR1 = I2Cn->SR1;
 
 	// 1- SB
 	if(SR1 & (1<<I2C_FLAG_SB))
 	{
-		uint8_t slaveAddress = (handle->slaveAddress<<1);
+		u8 slaveAddress = (handle->slaveAddress<<1);
 		if(handle->TxOrRx == I2C_TX_MODE)
 			slaveAddress &= ~(1); // Clear LSB to enter Transmission mode
 		else
@@ -204,7 +199,7 @@ void I2C_eventInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 		}
 
 		// Clear ADDR flag in case Master or Slave
-		uint8_t readSR2 = I2Cn->SR2;
+		u8 readSR2 = I2Cn->SR2;
 		(void)readSR2;
 	}
 
@@ -227,10 +222,10 @@ void I2C_eventInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 	else if(SR1 & (1<<I2C_FLAG_STOPF))
 	{
 		// Slave Mode
-		uint32_t readCR1 = I2Cn->CR1;
+		u32 readCR1 = I2Cn->CR1;
 		I2Cn->CR1 = readCR1; // Clear STOPF flag
 		(void)readCR1;
-		I2C_slaveHandleCallBackFunction(I2Cn, I2C_EVENT_RECEPTION_FINISHED);
+		I2C_voidSlaveHandleCallBackFunction(I2Cn, I2C_EVENT_RECEPTION_FINISHED);
 	}
 
 	// 5- RXNE
@@ -258,7 +253,7 @@ void I2C_eventInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 		}
 		else// Slave
 		{
-			I2C_slaveHandleCallBackFunction(I2Cn, I2C_EVENT_RECEIVE_DATA);
+			I2C_voidSlaveHandleCallBackFunction(I2Cn, I2C_EVENT_RECEIVE_DATA);
 		}
 	}
 
@@ -274,13 +269,13 @@ void I2C_eventInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 		}
 		else // Slave
 		{
-			I2C_slaveHandleCallBackFunction(I2Cn, I2C_EVENT_REQUEST_DATA);
+			I2C_voidSlaveHandleCallBackFunction(I2Cn, I2C_EVENT_REQUEST_DATA);
 		}
 	}
 }
 
-void I2C_errorInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
-	uint32_t SR1 = I2Cn->SR1;
+void I2C_voidErrorInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
+	u32 SR1 = I2Cn->SR1;
 
 	// 1- BERR
 	if(SR1 & (1<<I2C_FLAG_BERR))
@@ -302,7 +297,7 @@ void I2C_errorInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 			handle->runningState = I2C_ERROR_AF;
 		}
 		else{
-			I2C_slaveHandleCallBackFunction(I2Cn, I2C_EVENT_TRANSMISSION_FINISHED);
+			I2C_voidSlaveHandleCallBackFunction(I2Cn, I2C_EVENT_TRANSMISSION_FINISHED);
 		}
 	}
 	// 4- OVR
@@ -326,7 +321,7 @@ void I2C_errorInterruptHandler(st_I2C_RegDef_t* I2Cn, I2C_HandleIT_t* handle){
 
 }
 
-void I2C_interruptControl(st_I2C_RegDef_t* I2Cn, uint8_t state){
+void I2C_voidInterruptControl(st_I2C_RegDef_t* I2Cn, u8 state){
 	if(state == I2C_INT_EN){
 		// Enable Interrupt
 		I2Cn->CR2 |= (1<<I2C_ITBUFEN);

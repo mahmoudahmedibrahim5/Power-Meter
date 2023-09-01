@@ -21,9 +21,9 @@
  * for APB1 choose from (2, 4, 8, 16)
  * for APB2 choose from (2, 4, 8, 16)
  * */
-#define AHB_PRESCALER  1
-#define APB1_PRESCALER 1
-#define APB2_PRESCALER 1
+#define RCC_AHB_PRESCALER  1
+#define RCC_APB1_PRESCALER 1
+#define RCC_APB2_PRESCALER 1
 
 /* ********** Clock Security system **********
  * Choose to enable or disable this feature
@@ -31,7 +31,7 @@
  * DISABLE
  */
 
-#define RCC_CSS_ENABLE	ENABLE
+#define RCC_CSS_ENABLE	RCC_ENABLE
 
 
 /* ********** Peripheral Enable and Disable **********

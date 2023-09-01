@@ -8,17 +8,21 @@
 #ifndef I2C_I2C_REGISTERS_H_
 #define I2C_I2C_REGISTERS_H_
 
-typedef struct{
-	volatile uint32_t CR1;
-	volatile uint32_t CR2;
-	volatile uint32_t OAR1;
-	volatile uint32_t OAR2;
-	volatile uint32_t DR;
-	volatile uint32_t SR1;
-	volatile uint32_t SR2;
-	volatile uint32_t CCR;
-	volatile uint32_t TRISE;
-	volatile uint32_t FLTR;
+#define I2C1_BASE_ADDR 					0x40005400U
+#define I2C2_BASE_ADDR 					0x40005800U
+#define I2C3_BASE_ADDR 					0x40005C00U
+
+typedef volatile struct{
+	u32 CR1;
+	u32 CR2;
+	u32 OAR1;
+	u32 OAR2;
+	u32 DR;
+	u32 SR1;
+	u32 SR2;
+	u32 CCR;
+	u32 TRISE;
+	u32 FLTR;
 }st_I2C_RegDef_t;
 
 #define I2C1	((st_I2C_RegDef_t *)I2C1_BASE_ADDR)

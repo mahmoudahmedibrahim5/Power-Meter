@@ -7,9 +7,9 @@
 
 #include "RCC_Interface.h"
 
-void RCC_init()
+void RCC_voidInit()
 {
-#if (SYS_CLK == HSI)
+#if (SYS_CLK == RCC_HSI)
 	/* Enable HSI */
 	RCC->CR |= (1<<RCC_CR_HSI_ON);
 	/* Wait until HSI is ready */
@@ -20,14 +20,14 @@ void RCC_init()
 	/* Wait until it is used */
 	while( ((RCC->CFGR & (11<<2))>>2) != RCC_CFGR_HSI);
 
-#elif (SYS_CLK == HSE)
+#elif (SYS_CLK == RCC_HSE)
 	RCC->CR |= (1<<RCC_CR_HSE_ON);
 	while(!((RCC->CR) & (1<<17)));
 	RCC->CFGR &= ~(11<<0);
 	RCC->CFGR |= (RCC_CFGR_HSE<<0);
 	while( ((RCC->CFGR & (11<<2))>>2) != RCC_CFGR_HSE);
 
-#elif (SYS_CLK == PLL)
+#elif (SYS_CLK == RCC_PLL)
 	RCC->CR |= (1<<RCC_CR_PLL_ON);
 	while(!((RCC->CR) & (1<<25)));
 	RCC->CFGR &= ~(11<<0);
@@ -37,7 +37,7 @@ void RCC_init()
 #endif
 
 	/* Clock Security system */
-#if (RCC_CSS_ENABLE == ENABLE)
+#if (RCC_CSS_ENABLE == RCC_ENABLE)
 	RCC->CR |= (1<<19);
 #else
 	RCC->CR &= ~(1<<19);
@@ -45,7 +45,7 @@ void RCC_init()
 
 	/* AHB Prescaler */
 	RCC->CFGR &= ~(1111 << 4);
-	switch (AHB_PRESCALER) {
+	switch (RCC_AHB_PRESCALER) {
 	case 1:
 		RCC->CFGR |= (0000 << 4);
 		break;
@@ -80,7 +80,7 @@ void RCC_init()
 
 	/* APB1 Prescaler */
 	RCC->CFGR &= ~(111 << 10);
-	switch (APB1_PRESCALER) {
+	switch (RCC_APB1_PRESCALER) {
 	case 1:
 		RCC->CFGR |= (000 << 10);
 		break;
@@ -103,7 +103,7 @@ void RCC_init()
 
 	/* APB2 Prescaler */
 	RCC->CFGR &= ~(111 << 13);
-	switch (APB2_PRESCALER) {
+	switch (RCC_APB2_PRESCALER) {
 	case 1:
 		RCC->CFGR |= (000 << 13);
 		break;
@@ -126,7 +126,7 @@ void RCC_init()
 
 }
 
-void RCC_peripheralEn(EN_peripheral_t per)
+void RCC_voidPeripheralEnable(EN_peripheral_t per)
 {
 	switch(per)
 	{
@@ -238,7 +238,7 @@ void RCC_peripheralEn(EN_peripheral_t per)
 	}
 }
 
-void RCC_peripheralDis(EN_peripheral_t per)
+void RCC_voidPeripheralDisable(EN_peripheral_t per)
 {
 	switch(per)
 	{
@@ -350,7 +350,7 @@ void RCC_peripheralDis(EN_peripheral_t per)
 	}
 }
 
-void RCC_peripheralLowPowerEn(EN_peripheral_t per)
+void RCC_voidPeripheralLowPowerEnable(EN_peripheral_t per)
 {
 	switch (per)
 	{
@@ -462,7 +462,7 @@ void RCC_peripheralLowPowerEn(EN_peripheral_t per)
 	}
 }
 
-void RCC_peripheralLowPowerDis(EN_peripheral_t per)
+void RCC_voidPeripheralLowPowerDisable(EN_peripheral_t per)
 {
 	switch(per)
 	{
@@ -574,7 +574,7 @@ void RCC_peripheralLowPowerDis(EN_peripheral_t per)
 	}
 }
 
-void RCC_peripheralReset(EN_peripheral_t per)
+void RCC_voidPeripheralReset(EN_peripheral_t per)
 {
 	switch (per)
 	{
@@ -685,4 +685,3 @@ void RCC_peripheralReset(EN_peripheral_t per)
 		break;
 	}
 }
-

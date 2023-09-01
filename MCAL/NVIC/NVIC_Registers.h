@@ -10,21 +10,21 @@
 
 #define NVIC_BASE_ADDR					0xE000E000
 
-typedef struct{
-	uint32_t r1[64];
-	volatile uint32_t ISER[8];
-	uint32_t r2[24];
-	volatile uint32_t ICER[8];
-	uint32_t r3[24];
-	volatile uint32_t ISPR[8];
-	uint32_t r4[24];
-	volatile uint32_t ICPR[8];
-	uint32_t r5[24];
-	volatile uint32_t IABR[8];
-	uint32_t r6[56];
-	volatile uint8_t IPR[240];
-	uint32_t r7[580];
-	volatile uint32_t STIR;
+typedef volatile struct{
+	u32 r1[64];
+	u32 ISER[8];
+	u32 r2[24];
+	u32 ICER[8];
+	u32 r3[24];
+	u32 ISPR[8];
+	u32 r4[24];
+	u32 ICPR[8];
+	u32 r5[24];
+	u32 IABR[8];
+	u32 r6[56];
+	u8 IPR[240];
+	u32 r7[580];
+	u32 STIR;
 }st_NVIC_RegDef_t;
 
 #define NVIC	((st_NVIC_RegDef_t *)NVIC_BASE_ADDR)

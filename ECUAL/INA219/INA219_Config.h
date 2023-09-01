@@ -16,7 +16,7 @@
 
 typedef struct{
 	st_I2C_RegDef_t* I2Cn;
-	uint8_t slaveAddress;
+	u8 slaveAddress;
 }INA219_t;
 
 #define INA219_SHUNT_RESISTANCE		100	// mΩ

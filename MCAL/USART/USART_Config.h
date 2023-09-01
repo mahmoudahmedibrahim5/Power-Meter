@@ -6,49 +6,49 @@
  */
 
 #ifndef USART_USART_CONFIG_H_
-#define USART_USART_CONFIG_H_
+#define USART_USART_USART_CONFIG_H_
 
-#define F_CPU	16000000
+#define USART_F_CPU	16000000
 
 typedef struct{
-	uint8_t mode;
-	uint8_t transmission;
-	uint8_t overSampling;
-	uint8_t dataSize;
-	uint8_t stopBits;
-	uint8_t parityType;
-	uint32_t baudrate;
+	u8 mode;
+	u8 transmission;
+	u8 overSampling;
+	u8 dataSize;
+	u8 stopBits;
+	u8 parityType;
+	u32 baudrate;
 }USART_Config_t;
 
 /* Modes */
-#define ASYNCHRONOUS			0
-#define HARDWARE_FLOW_CONTROL	1
-#define MULTIBUFFER				2
-#define MULTIPROCESSOR			3
-#define SYNCHRONOUS				4
-#define SMARTCARD				5
-#define HALF_DUPLEX				6
-#define IRDA					7
-#define LIN						8
+#define USART_ASYNCHRONOUS				0
+#define USART_HARDWARE_FLOW_CONTROL		1
+#define USART_MULTIBUFFER				2
+#define USART_MULTIPROCESSOR			3
+#define USART_SYNCHRONOUS				4
+#define USART_SMARTCARD					5
+#define USART_HALF_DUPLEX				6
+#define USART_IRDA						7
+#define USART_LIN						8
 /* Transmission and Reception */
-#define TX_ONLY		0
-#define	RX_ONLY		1
-#define TX_AND_RX	2
+#define USART_TX_ONLY					0
+#define	USART_RX_ONLY					1
+#define USART_TX_AND_RX					2
 /* OverSampling */
-#define OVERSAMPLING16	0
-#define OVERSAMPLING8	1
+#define USART_OVERSAMPLING16			0
+#define USART_OVERSAMPLING8				1
 /* Data size */
-#define _8_BIT		0
-#define _9_BIT		1
+#define USART_DATA_SIZE_8_BIT			0
+#define USART_DATA_SIZE_9_BIT			1
 /* Stop Bits */
-#define _1_BIT		0
-#define _0_5_BIT	1
-#define	_2_BIT		2
-#define _1_5_BIT	3
+#define USART_STOP_BIT_1_BIT			0
+#define USART_STOP_BIT_0_5_BIT			1
+#define	USART_STOP_BIT_2_BIT			2
+#define USART_STOP_BIT_1_5_BIT			3
 /* Parity Type */
-#define EVEN_PARITY	0
-#define ODD_PARITY	1
-#define NO_PARITY	2
+#define USART_EVEN_PARITY				0
+#define USART_ODD_PARITY				1
+#define USART_NO_PARITY					2
 /* BaudRate */
 
 #endif /* USART_USART_CONFIG_H_ */

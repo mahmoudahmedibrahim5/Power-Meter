@@ -8,17 +8,18 @@
 #ifndef NVIC_NVIC_INTERFACE_H_
 #define NVIC_NVIC_INTERFACE_H_
 
-#include "../../Std Libraries/stm32f401xx.h"
+#include "../../Std Libraries/STD_TYPES.h"
 #include "NVIC_Registers.h"
+#include "NVIC_Config.h"
 
-void NVIC_enableIRQ(uint8_t IRQn);
-void NVIC_disableIRQ(uint8_t IRQn);
+void NVIC_voidEnableIRQ(u8 IRQn);
+void NVIC_voidDisableIRQ(u8 IRQn);
 
-void NVIC_setPendingIRQ(uint8_t IRQn);
-void NVIC_clearPendingIRQ(uint8_t IRQn);
+void NVIC_voidSetPendingIRQ(u8 IRQn);
+void NVIC_voidClearPendingIRQ(u8 IRQn);
 
-void NVIC_setPriority(uint8_t IRQn, uint8_t priority);
-uint8_t NVIC_getPriority(uint8_t IRQn);
+void NVIC_voidSetPriority(u8 IRQn, u8 priority);
+u8 NVIC_u8GetPriority(u8 IRQn);
 
 typedef enum{
 	NVIC_IRQ_WWDG,

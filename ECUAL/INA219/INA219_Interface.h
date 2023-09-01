@@ -12,11 +12,11 @@
 #include "INA219_Registers.h"
 #include "INA219_Config.h"
 
-void INA219_init(INA219_t* config);
-sint16_t INA219_readShuntVoltage(INA219_t* config);
-uint16_t INA219_readBusVoltage(INA219_t* config);
-sint16_t INA219_readCurrent(INA219_t* config);
-uint16_t INA219_readPower(INA219_t* config);
+void INA219_voidInit(INA219_t* config);
+s16 INA219_s16ReadShuntVoltage(INA219_t* config);
+u16 INA219_u16ReadBusVoltage(INA219_t* config);
+s16 INA219_s16ReadCurrent(INA219_t* config);
+u16 INA219_u16ReadPower(INA219_t* config);
 
 
 #endif /* INA219_INA219_INTERFACE_H_ */

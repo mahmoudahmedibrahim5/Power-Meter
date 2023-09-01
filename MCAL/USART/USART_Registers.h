@@ -8,14 +8,18 @@
 #ifndef USART_USART_REGISTERS_H_
 #define USART_USART_REGISTERS_H_
 
-typedef struct{
-	volatile uint32_t SR;
-	volatile uint32_t DR;
-	volatile uint32_t BRR;
-	volatile uint32_t CR1;
-	volatile uint32_t CR2;
-	volatile uint32_t CR3;
-	volatile uint32_t GTPR;
+#define USART1_BASE_ADDR				0x40011000U
+#define USART2_BASE_ADDR				0x40004400U
+#define USART6_BASE_ADDR				0x40011400U
+
+typedef volatile struct{
+	u32 SR;
+	u32 DR;
+	u32 BRR;
+	u32 CR1;
+	u32 CR2;
+	u32 CR3;
+	u32 GTPR;
 }st_USART_RegDef_t;
 
 #define USART1		((st_USART_RegDef_t*)USART1_BASE_ADDR)

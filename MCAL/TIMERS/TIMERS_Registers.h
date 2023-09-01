@@ -8,28 +8,33 @@
 #ifndef TIMERS_TIMERS_REGISTERS_H_
 #define TIMERS_TIMERS_REGISTERS_H_
 
+#define TIM2_BASE_ADDR					0x40000000U
+#define TIM3_BASE_ADDR					0x40000400U
+#define TIM4_BASE_ADDR					0x40000800U
+#define TIM5_BASE_ADDR					0x40000C00U
+
 typedef struct{
-	uint32_t CR1;
-	uint32_t CR2;
-	uint32_t SMCR;
-	uint32_t DIER;
-	uint32_t SR;
-	uint32_t EGR;
-	uint32_t CCMR1;
-	uint32_t CCMR2;
-	uint32_t CCER;
-	uint32_t CNT; 	// Counter Register
-	uint32_t PSC; 	// Prescaler Register
-	uint32_t ARR; 	// Auto-Reload Register
-	uint32_t r0;
-	uint32_t CCR1;
-	uint32_t CCR2;
-	uint32_t CCR3;
-	uint32_t CCR4;
-	uint32_t r1;
-	uint32_t DCR;
-	uint32_t DMAR;
-	uint32_t OR; 	// present only in TIM2 and TIM5
+	u32 CR1;
+	u32 CR2;
+	u32 SMCR;
+	u32 DIER;
+	u32 SR;
+	u32 EGR;
+	u32 CCMR1;
+	u32 CCMR2;
+	u32 CCER;
+	u32 CNT; 	// Counter Register
+	u32 PSC; 	// PreScaler Register
+	u32 ARR; 	// Auto-Reload Register
+	u32 r0;
+	u32 CCR1;
+	u32 CCR2;
+	u32 CCR3;
+	u32 CCR4;
+	u32 r1;
+	u32 DCR;
+	u32 DMAR;
+	u32 OR; 	// present only in TIM2 and TIM5
 }st_TIM_RegDef_t;
 
 #define TIM2	((st_TIM_RegDef_t *)TIM2_BASE_ADDR)
