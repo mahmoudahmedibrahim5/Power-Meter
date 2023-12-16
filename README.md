@@ -4,8 +4,6 @@
 
 </div>
 
-<br>
-
 ## Features
 - Reading Bus Voltage, Current and power.
 - Switch the unit automatically (micro, milli, and real unit)
