@@ -9,7 +9,7 @@
 <br>
 
 ## Implementation
-This is a Layered Architecture Embedded C program where everything is written from scratch.
+This is a Layered Architecture Embedded C program where everything is written from scratch. You can find more details in the documentation.
 
 ## MCAL Layer
 RCC, GPIO, TIMERS, USART, I2C
@@ -26,5 +26,3 @@ The main functions of the program
 I've made a small circuit with a potentiometer to simulate the load to test the project.
 You can find a video testing the project in this link 
 https://www.linkedin.com/posts/mahmoud158699216_embeddedsystems-arm-stm32-activity-7104739210397384705-sLWA?utm_source=share&utm_medium=member_desktop
-
-You can find more details in the documentation.
